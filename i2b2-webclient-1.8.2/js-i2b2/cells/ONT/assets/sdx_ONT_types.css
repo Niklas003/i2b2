@@ -1,0 +1,45 @@
+span.sdxStyleONT-CONCPT::before,
+span.sdxStyleONT-MODIFIER::before {
+    content: " ";
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    top: 3px;
+}
+
+
+/* ========================================== */
+span.sdxStyleONT-CONCPT::before {
+    background-image: url(sdx_ONT_CONCPT_root.svg);
+    background-repeat: no-repeat;
+}
+span.sdxStyleONT-CONCPT.tvRoot::before {
+    background-image: url(sdx_ONT_CONCPT_root.svg);
+}
+span.sdxStyleONT-CONCPT.tvBranch::before {
+    background-image: url(sdx_ONT_CONCPT_branch.svg);
+}
+span.sdxStyleONT-CONCPT.tvLeaf::before {
+    background-image: url(sdx_ONT_CONCPT_leaf.svg);
+}
+
+span.sdxStyleONT-CONCPT.protected::before {
+    background-image: url(ONT_protected.svg) !important;
+    background-repeat: no-repeat;
+}
+
+
+span.sdxStyleONT-MODIFIER::before {
+    background-image: url(sdx_ONT_CONCPT_root.svg);
+    background-repeat: no-repeat;
+}
+span.sdxStyleONT-MODIFIER.tvRoot::before {
+    background-image: url(sdx_ONT_CONCPT_root.svg);
+}
+span.sdxStyleONT-MODIFIER.tvBranch::before {
+    background-image: url(sdx_ONT_MODIFIER_branch.svg);
+}
+span.sdxStyleONT-MODIFIER.tvLeaf::before {
+    background-image: url(sdx_ONT_MODIFIER_leaf.svg);
+}

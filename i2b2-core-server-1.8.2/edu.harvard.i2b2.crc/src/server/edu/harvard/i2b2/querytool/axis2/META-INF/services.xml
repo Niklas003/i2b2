@@ -1,0 +1,43 @@
+<!--
+  Copyright (c) 2006-2018 Massachusetts General Hospital 
+  All rights reserved. This program and the accompanying materials 
+  are made available under the terms of the Mozilla Public License,
+  v. 2.0. If a copy of the MPL was not distributed with this file, You can
+  obtain one at http://mozilla.org/MPL/2.0/. I2b2 is also distributed under
+  the terms of the Healthcare Disclaimer.
+-->
+<service name="QueryToolService">
+    <description>
+        This is a sample Web Service for Query Tool Processor
+    </description>
+    <parameter name="ServiceClass" locked="false">edu.harvard.i2b2.querytool.axis2.QueryService</parameter>
+    <operation name="queryPatient">
+        <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    <operation name="getResultSet">
+        <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    <operation name="request">
+	    <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    
+    <operation name="pdorequest">
+	    <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    <!--
+    <operation name="findXmlDefinition">
+        <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    
+    <operation name="queryManager">
+        <actionMapping>urn:queryToolService</actionMapping>
+        <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+    </operation>
+    -->
+</service>
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2006-2018 Massachusetts General Hospital 
+  All rights reserved. This program and the accompanying materials 
+  are made available under the terms of the Mozilla Public License,
+  v. 2.0. If a copy of the MPL was not distributed with this file, You can
+  obtain one at http://mozilla.org/MPL/2.0/. I2b2 is also distributed under
+  the terms of the Healthcare Disclaimer.
+-->
+<examples>
+
+    <value xsi:type="i2b2:tval_valueType" concept_cd="birthdate">yellow</value>
+    <value xsi:type="i2b2:nval_valueType" concept_cd="test_result">12.0</value>
+    <value xsi:type="i2b2:blob_valueType" concept_cd="extradata">
+        <first>Some xml blob data.</first>
+    </value>
+
+
+    <value xsi:type="i2b2:date_valueType" concept_cd="birthdate">2002-01-18</value>
+    <value xsi:type="i2b2:tval_nval_valueType" concept_cd="test_result">
+        <value xsi:type="i2b2:tval_valueType" concept_cd="test_result">&gt;</value>
+        <value xsi:type="i2b2:nval_valueType" concept_cd="test_result">20</value>
+    </value>
+
+
+    <tval concept_cd="birthdate">yellow</tval>
+    <nval concept_cd="test_result">12.0</nval>
+    <blob concept_cd="extradata">
+        <first>
+            <second>
+                <third>Something here.</third>
+            </second>
+        </first>
+    </blob>
+
+
+    <date concept_cd="birthdate">2002-01-18</date>
+    <tval_nval concept_cd="test_result">
+        <tval concept_cd="test_result">&gt;</tval>
+        <nval concept_cd="test_result">20</nval>
+    </tval_nval>
+
+
+</examples>

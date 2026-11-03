@@ -1,0 +1,51 @@
+.RequestTableView {
+  width: 100%;
+
+  .title {
+    font-size: 1.05em;
+  }
+
+  .MuiTreeItem-content .MuiTreeItem-label {
+    font-size: 1.01em;
+    overflow-wrap: break-word;
+  }
+
+  .actions {
+    margin-top: 0.5em;
+    margin-bottom: 0.7em;
+  }
+
+  .RefreshTableIcon {
+    margin-top: 1.5em;
+    float: right;
+  }
+
+  .createFileBtn {
+    margin-bottom: 0.9em;
+  }
+
+  .RequestTableGrid {
+    margin-top: 3.4em;
+    width: 100%;
+  }
+
+  .InvalidRow {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .InvalidRow:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .MuiTreeItem-content:hover {
+      background-color: transparent;
+  }
+
+  .MuiDataGrid-cell:focus, .MuiDataGrid-cell:focus-within {
+    outline: none !important;
+  }
+
+  .Mui-selected, .Mui-selected.focused {
+    background-color: transparent !important;
+  }
+}

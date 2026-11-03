@@ -1,0 +1,4 @@
+.idea
+
+# Ignore React Build Artifacts
+node_modules/

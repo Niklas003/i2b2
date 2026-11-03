@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: common libraries
+Bundle-SymbolicName: edu.harvard.i2b2.server-common
+Bundle-Version: 1.7
+Bundle-Vendor: i2b2.harvard.edu
+Bundle-Localization: plugin

@@ -1,0 +1,10 @@
+    <panel>
+        <panel_number>{{number}}</panel_number>
+        <panel_accuracy_scale>100</panel_accuracy_scale>
+        <invert>{{invert}}</invert>
+        <panel_timing>{{timing}}</panel_timing>
+        <total_item_occurrences>{{occursCount}}</total_item_occurrences>
+        {{#each items}}
+                {{#> QueryPanelItem }}QueryPanelItem partial/template not registered!{{/QueryPanelItem}}
+        {{/each}}
+    </panel>

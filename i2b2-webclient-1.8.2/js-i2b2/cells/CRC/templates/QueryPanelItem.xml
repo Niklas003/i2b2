@@ -1,0 +1,34 @@
+        <item>
+            <hlevel>{{hlevel}}</hlevel>
+            <item_name>{{{name}}}</item_name>
+            <item_key>{{{key}}}</item_key>
+            <tooltip>{{{tooltip}}}</tooltip>
+            {{#if class}}<class>{{class}}</class>{{/if}}
+            {{#if isModifier}}
+                <constrain_by_modifier>
+                    <modifier_name>{{modName}}</modifier_name>
+                    <applied_path>{{applied_path}}</applied_path>
+                    <modifier_key>{{modKey}}</modifier_key>
+                    {{#if ValueType}}
+                        {{> QueryPanelItemConstraint }}
+                    {{/if}}
+            </constrain_by_modifier>
+            {{/if}}
+            {{#if icon}}<item_icon>{{icon}}</item_icon>{{/if}}
+            <item_is_synonym>{{isSynonym}}</item_is_synonym>
+            {{#if hasDate}}
+                <constrain_by_date>
+                    {{#if dateFrom}}
+                        <date_from>{{dateFrom}}</date_from>
+                    {{/if}}
+                    {{#if dateTo}}
+                        <date_to>{{dateTo}}</date_to>
+                    {{/if}}
+                </constrain_by_date>
+            {{/if}}
+            {{#unless isModifier}}
+            {{#if ValueType}}
+                {{> QueryPanelItemConstraint }}
+            {{/if}}
+            {{/unless}}
+        </item>

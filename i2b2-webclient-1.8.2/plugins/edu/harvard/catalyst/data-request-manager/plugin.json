@@ -1,0 +1,31 @@
+{
+  "title": "Data Request Manager",
+  "description": "This plugin allows for managing data export requests",
+  "category": ["export"],
+  "icons": { "size32x32": "export-icon.png" },
+  "assetDir": "build",
+  "plugin_version" : "1.0",
+  "i2b2_version" : "1.8.2",
+  "base": "build/index.html",
+  "sandbox": true,
+  "admin_only": false,
+  "roles": ["ADMIN", "MANAGER", "DATA_LDS", "DATA_PROT", "DATA_DEID"],
+  "authorizedTunnel": {
+    "variables" :{
+      "i2b2.UI.cfg.obfuscatedDisplayNumber": "R",
+      "i2b2.UI.cfg.useFloorThreshold" : "R",
+      "i2b2.UI.cfg.floorThresholdNumber" : "R",
+      "i2b2.UI.cfg.floorThresholdText" : "R",
+      "i2b2.PM.model.login_password": "R",
+      "i2b2.PM.model.login_username": "R",
+      "i2b2.PM.model.userRoles": "RO",
+      "i2b2.PM.model.isAdmin": "R"
+    },
+    "functions" : [
+      "i2b2.CRC.ctrlr.QT.doQueryLoad",
+      "i2b2.layout.selectTab"
+    ]
+  },
+  "state": {
+  }
+}

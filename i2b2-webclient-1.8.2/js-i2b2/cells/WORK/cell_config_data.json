@@ -1,0 +1,24 @@
+{
+  "files": [
+    "WORK_ctrlr_general.js",
+    "WORK_view.js",
+    "WORK_sdx_WRK.js",
+    "WORK_sdx_XML.js",
+    "i2b2_msgs.js"
+  ],
+  "preload": [
+    "assets/sdx_WORK_root.svg",
+    "assets/sdx_WORK_folder.svg",
+    "assets/sdx_WORK_XML.svg"
+  ],
+  "css": [
+    "sdx_WORK_types.css",
+    "ContextMenuDialog.css",
+    "WORK_view.css"
+  ],
+  "config": {
+    "name": "Workplace Cell",
+    "icons": {},
+    "category": ["core","cell"]
+  }
+}

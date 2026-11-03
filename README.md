@@ -1,0 +1,183 @@
+# i2b2 lokale Entwicklungsumgebung
+
+Diese README beschreibt das lokale i2b2-Setup unter Windows mit Docker Desktop.
+
+## Verzeichnisstruktur
+
+```text
+i2b2\
+|-- i2b2-core-server-1.8.2\   Java-/Ant-Quellcode des Backends
+|-- i2b2-webclient-1.8.2\     Quellcode des Frontends
+|-- i2b2-nl-dev\              Docker Compose und Konfiguration
+|   |-- docker-compose.yml
+|   |-- .env
+|   |-- custom_datasource.txt
+|   `-- restart_containers.sh
+`-- README.md
+```
+
+Alle relativen Pfade in `i2b2-nl-dev/docker-compose.yml` beziehen sich auf den Ordner `i2b2-nl-dev`.
+
+## Voraussetzungen
+
+- Docker Desktop mit laufender Linux-Container-Engine
+- Docker Compose v2 (`docker compose`)
+- PowerShell
+- Fuer den Backend-Build: Ant und ein passendes Java werden im Core-Container verwendet
+
+## Container starten
+
+PowerShell oeffnen und in den Compose-Ordner wechseln:
+
+```powershell
+cd i2b2\i2b2-nl-dev
+
+docker compose up -d
+```
+
+Status pruefen:
+
+```powershell
+docker compose ps
+```
+
+Das Frontend ist erreichbar unter:
+
+```text
+http://localhost:8080
+```
+
+Logs anzeigen:
+
+```powershell
+docker compose logs -f i2b2-core-server
+docker compose logs -f i2b2-webclient
+```
+
+Container stoppen:
+
+```powershell
+docker compose down
+```
+
+## Lokale Quellcode-Mounts
+
+Die Compose-Datei bindet die lokalen Quellcodeordner in die Container:
+
+```yaml
+# Frontend
+../i2b2-webclient-1.8.2:/var/www/html/webclient
+
+# Backend
+../i2b2-core-server-1.8.2:/opt/jboss/wildfly/i2b2-core-server
+```
+
+### Frontend entwickeln
+
+Aenderungen an HTML, CSS, JavaScript und Bildern werden direkt aus dem lokalen Ordner verwendet. Ein Container-Neustart ist normalerweise nicht erforderlich. Die Browserseite neu laden, bei Cache-Problemen mit `Strg + F5`.
+
+Ein Neustart ist erforderlich, wenn `docker-compose.yml`, Ports, Umgebungsvariablen oder Container-Befehle geaendert wurden.
+
+## Backend mit Ant bauen
+
+Der Core-Server wird im laufenden Container gebaut. Die Ant-Build-Dateien kopieren die erzeugten Dateien anschliessend in WildFly-Deployment-Verzeichnisse.
+
+### 1. Backend-Container neu erstellen
+
+Nach der ersten Aktivierung des Backend-Mounts:
+
+```powershell
+cd i2b2\i2b2-nl-dev
+docker compose up -d --force-recreate i2b2-core-server
+```
+
+### 2. Ant installieren
+
+Nur beim ersten Mal oder falls `ant` fehlt:
+
+```powershell
+docker exec -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
+```
+
+### 3. Backend bauen und deployen
+
+```powershell
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant -Djboss.home=/opt/jboss/wildfly all"
+
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.pm && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.ontology && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.crc && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.workplace && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.im && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+```
+
+Danach WildFly neu starten:
+
+```powershell
+docker compose restart i2b2-core-server
+```
+
+Bei jeder Backend-Aenderung muessen die betroffenen Module erneut gebaut und deployed werden. Der komplette Build kann wiederholt werden, wenn unklar ist, welche Abhaengigkeiten betroffen sind.
+
+## Datenbank
+
+Der PostgreSQL-Container heisst `i2b2-data-pgsql` und ist im Docker-Netzwerk unter diesem Namen erreichbar. Die Datenbankparameter befinden sich in `i2b2-nl-dev/.env`.
+
+Die verwendeten Schemas sind unter anderem:
+
+- `i2b2demodata` fuer CRC
+- `i2b2metadata` fuer Ontology
+- `i2b2pm` fuer Project Management
+- `i2b2hive` fuer Hive und IM
+- `i2b2workdata` fuer Workplace
+
+Der PostgreSQL-Port ist standardmaessig nur innerhalb des Docker-Netzwerks erreichbar. Der Container-Port `5432` wird aktuell nicht auf den Windows-Host weitergeleitet.
+
+## Umgebungsvariablen
+
+Die Datei `i2b2-nl-dev/.env` steuert Image-Tags, Datenbankverbindung und Passwoerter. Bei Aenderungen an `.env` die Container neu erstellen:
+
+```powershell
+cd i2b2\i2b2-nl-dev
+docker compose up -d --force-recreate
+```
+
+Die Datei `.env` enthaelt Zugangsdaten und sollte nicht in ein oeffentliches Repository committed werden.
+
+## Haeufige Probleme
+
+### Frontend zeigt alte Dateien
+
+Browser-Cache leeren oder `Strg + F5` verwenden. Danach pruefen, ob der Mount aktiv ist:
+
+```powershell
+docker inspect i2b2-webclient
+```
+
+### Backend-Aenderung ist nicht sichtbar
+
+Ant-Build und Deployment erneut ausfuehren und anschliessend den Core-Server neu starten:
+
+```powershell
+docker compose restart i2b2-core-server
+```
+
+### Container startet nicht
+
+Logs beider beteiligten Container pruefen:
+
+```powershell
+docker compose logs --tail=200 i2b2-core-server
+docker compose logs --tail=200 i2b2-data-pgsql
+```
+
+### Compose-Datei pruefen
+
+```powershell
+cd i2b2\i2b2-nl-dev
+docker compose config
+```

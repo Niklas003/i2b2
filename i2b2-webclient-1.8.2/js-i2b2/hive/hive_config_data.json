@@ -1,0 +1,11 @@
+{
+  "files": [
+    "hive_globals.js",
+    "hive_helpers.js",
+    "i2b2_layout.js",
+    "hive_SDX.js",
+    "hive_msg_sniffer.js",
+    "i2b2_cell_communicator.js"
+  ],
+  "config": {}
+}

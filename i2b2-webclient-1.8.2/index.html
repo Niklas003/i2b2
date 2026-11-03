@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8,11"/>
+    <title>i2b2 Web Client</title>
+    <!--
+     *  *************************
+     *       i2b2 Web Client
+     *           v1.8.2
+     *  *************************
+     *  @modified: 05/03/17
+     *  Contributors:
+     *     Nick Benik
+     *     Griffin Weber, MD, PhD
+     *     Mike Mendis
+     *     Shawn Murphy MD, PhD
+     *     David Wang
+     *     Hannah Murphy
+     *     Nich Wattanasin
+     *     Bhaswati Ghosh
+     *
+     */-->
+
+    <script type="text/javascript">
+        var i2b2build = "1.8.2   [07/25/25 12:00 PM] ";
+    </script>
+
+    <!-- LOAD JQuery FROM local server (jQuery first, then Bootstrap JS) -->
+    <script type="text/javascript" src="js-ext/jquery/3.7.1/jquery.min.js" ></script>
+
+    <!-- LOAD Golden-Layout FROM local server -->
+    <script type="text/javascript" src="js-ext/goldenlayout/1.5.9/goldenlayout.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="js-ext/goldenlayout/1.5.9/goldenlayout-base.css">
+    <link rel="stylesheet" type="text/css" href="js-ext/goldenlayout/1.5.9/goldenlayout-light-theme.css">
+
+    <!-- LOAD Bootstrap FROM local server -->
+    <script type="text/javascript" src="js-ext/bootstrap/5.3.3/js/bootstrap.bundle.min.js" ></script>
+    <link rel="stylesheet" href="js-ext/bootstrap/5.3.3/css/bootstrap.min.css">
+
+    <!-- LOAD Bootstrap-treeview FROM local server -->
+    <!-- uses a highly modified version that has dynamic loading functionality added -->
+    <script type="text/javascript" src="js-ext/bootstrap-treeview/1.2.0/bootstrap-treeview.js" ></script>
+    <link rel="stylesheet" href="js-ext/bootstrap-treeview/1.2.0/bootstrap-treeview.css">
+    <link rel="stylesheet" href="js-ext/bootstrap/shim/glyphicon.css"> <!-- requires a shim to use bootstrap 4 -->
+
+    <!-- LOAD Bootstrap-context-menu FROM local server -->
+    <script type="text/javascript" src="js-ext/bootstrap-menu/1.0.14/BootstrapMenu.min.js" ></script>
+    <link rel="stylesheet" href="js-ext/bootstrap-menu/shim/BootstrapMenu.css"> <!-- requires a shim to use bootstrap 4 -->
+
+    <!-- LOAD Bootstrap Icons FROM CDN -->
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.css">
+
+    <!-- LOAD Handlebars.js FROM CDN -->
+    <script type="text/javascript" src="js-ext/handlebars/4.7.8/handlebars.min.js"></script>
+
+    <!-- LOAD date picker FROM local server -->
+    <script src="js-ext/gijgo/1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="js-ext/gijgo/1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Load Luxon.js for parsing and formatting date/time -->
+    <script type="text/javascript" src="js-ext/luxon/3.4.4/luxon.min.js"></script>
+
+
+    <!-- Graphics Libraries (only work in IE9 and above) -->
+    <script src="js-ext/d3/7.9.0/d3.min.js"></script>
+    <!-- load i2b2 framework -->
+    <script type="text/javascript" src="js-i2b2/i2b2_loader.js"></script>
+    <script type="text/javascript" src="js-i2b2/i2b2_ui_config.js"></script>
+    <link type="text/css" href="assets/css/i2b2.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+      /****************************************************/
+      /******************** INITIALIZE ********************/
+      /****************************************************/
+      $(document).ready(function() {
+        // put any pre-i2b2 initialization code here...
+
+        // ...then initialize the i2b2 framework
+        i2b2.Init();
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,49 @@
+span.sdxStyleCRC-PDO::before,
+span.sdxStyleCRC-PR::before,
+span.sdxStyleCRC-PRC::before,
+span.sdxStyleCRC-PRS::before,
+span.sdxStyleCRC-QDEF::before,
+span.sdxStyleCRC-QI::before,
+span.sdxStyleCRC-QM::before,
+span.sdxStyleCRC-QMT::before {
+	content: " ";
+	position: relative;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	top: 3px;
+}
+
+
+/* ========================================== */
+span.sdxStyleCRC-PDO::before {
+	background-image: url(sdx_CRC_PDO.svg);
+}
+
+span.sdxStyleCRC-PR::before {
+	background-image: url(sdx_CRC_PR.svg);
+}
+
+span.sdxStyleCRC-PRC::before {
+	background-image: url(sdx_CRC_PRC.svg);
+}
+
+span.sdxStyleCRC-PRS::before {
+	background-image: url(sdx_CRC_PRS.svg);
+}
+
+span.sdxStyleCRC-QDEF::before {
+	background-image: url(sdx_CRC_QDEF.jpg);
+}
+
+span.sdxStyleCRC-QI::before {
+	background-image: url(sdx_CRC_QI.svg);
+}
+
+span.sdxStyleCRC-QM::before {
+	background-image: url(sdx_CRC_QM.svg);
+}
+
+span.sdxStyleCRC-QMT::before {
+	background-image: url(sdx_CRC_QM.svg);
+}

@@ -1,0 +1,73 @@
+{
+  "files": [
+    "CRC_sdx_QM.js",
+    "CRC_sdx_QI.js",
+    "CRC_sdx_PRC.js",
+    "CRC_sdx_PRS.js",
+    "CRC_sdx_ENS.js",
+    "CRC_sdx_PR.js",
+    "CRC_sdx_QDEF.js",
+    "CRC_sdx_QGDEF.js",
+    "CRC_view_History.js",
+    "CRC_ctrlr_History.js",
+    "CRC_ctrlr_QryTool.js",
+    "CRC_view_QryTool.js",
+    "CRC_ctrlr_QryMgr.js",
+    "CRC_view_QryMgr.js",
+    "CRC_view_QryReport.js",
+    "i2b2_msgs.js",
+    "CRC_ctrlr_LabValues.js",
+    "CRC_view_graphs.js",
+    "CRC_view_search.js",
+    "ModLabValues/CRC_view_BASIC.js",
+    "ModLabValues/CRC_view_GENOTYPE_RSID.js",
+    "ModLabValues/CRC_view_GENOTYPE_GENE.js",
+    "ModLabValues/CRC_view_NUMBER_EXAMPLE.js"
+  ],
+  "preload": [
+    "assets/sdx_CRC_PDO.svg",
+    "assets/sdx_CRC_PR.svg",
+    "assets/sdx_CRC_PRC.svg",
+    "assets/sdx_CRC_PRS.svg",
+    "assets/sdx_CRC_PRS.svg",
+    "assets/sdx_CRC_QI.svg",
+    "assets/sdx_CRC_QM.svg",
+    "assets/sdx_CRC_QM.svg"
+  ],
+  "css": [
+    "QueryHistory.css",
+    "QueryGroups.css",
+    "QueryRunner.css",
+    "QueryStatus.css",
+    "sdx_CRC_types.css",
+    "ModLabValues/CRC_view_BASIC.css",
+    "ModLabValues/CRC_view_NUMBER_EXAMPLE.css"
+  ],
+  "config": {
+    "name": "Data Repository",
+    "description": "The Data Repository cell stores all information that a user saves within the i2b2 Hive.",
+    "icons": {},
+    "category": ["core", "cell"],
+    "paramTranslation": [{
+      "thinClientName": "sortBy",
+      "defaultValue": "DATE"
+    },
+      {
+        "thinClientName": "sortOrder",
+        "defaultValue": "DESC"
+      },
+      {
+        "thinClientName": "maxQueriesDisp",
+        "defaultValue": 25
+      },
+      {
+        "thinClientName": "maxChildren",
+        "defaultValue": 200
+      },
+      {
+        "thinClientName": "queryTimeout",
+        "defaultValue": 180
+      }
+    ]
+  }
+}

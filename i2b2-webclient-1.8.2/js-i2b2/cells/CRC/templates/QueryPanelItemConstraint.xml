@@ -1,0 +1,14 @@
+<constrain_by_value>
+    <value_type>{{ValueType}}</value_type>
+    <value_operator>{{ValueOperator}}</value_operator>
+    {{#if isString}}
+    <value_constraint><![CDATA[{{Value}}]]></value_constraint>
+    {{else if isEnum}}
+    <value_constraint>({{#each Value}}'{{this}}'{{#unless @last}},{{/unless}}{{/each}})</value_constraint>
+    {{else}}
+    <value_constraint>{{Value}}</value_constraint>
+    {{/if}}
+    {{#if ValueUnit}}
+    <value_unit_of_measure>{{ValueUnit}}</value_unit_of_measure>
+    {{/if}}
+</constrain_by_value>
