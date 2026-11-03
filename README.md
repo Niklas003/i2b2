@@ -72,6 +72,16 @@ Die Compose-Datei bindet die lokalen Quellcodeordner in die Container:
 ../i2b2-core-server-1.8.2:/opt/jboss/wildfly/i2b2-core-server
 ```
 
+Der Backend-Mount stellt den Quellcode und die Build-Dateien bereit. Er ersetzt
+nicht automatisch das von WildFly geladene Deployment. Dafuer muss das lokal
+gebaute WAR zusaetzlich nach `standalone/deployments` gemountet werden:
+
+```yaml
+volumes:
+	- ../i2b2-core-server-1.8.2:/opt/jboss/wildfly/i2b2-core-server
+	- ../i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war:/opt/jboss/wildfly/standalone/deployments/i2b2.war
+```
+
 ### Frontend entwickeln
 
 Aenderungen an HTML, CSS, JavaScript und Bildern werden direkt aus dem lokalen Ordner verwendet. Ein Container-Neustart ist normalerweise nicht erforderlich. Die Browserseite neu laden, bei Cache-Problemen mit `Strg + F5`.
@@ -80,39 +90,41 @@ Ein Neustart ist erforderlich, wenn `docker-compose.yml`, Ports, Umgebungsvariab
 
 ## Backend mit Ant bauen
 
-Der Core-Server wird im laufenden Container gebaut. Die Ant-Build-Dateien kopieren die erzeugten Dateien anschliessend in WildFly-Deployment-Verzeichnisse.
+Der Core-Server wird im laufenden Container gebaut. Das laufende WildFly
+laedt `/opt/jboss/wildfly/standalone/deployments/i2b2.war`; der Quellcode-Mount
+allein aktiviert keinen lokalen Build.
 
-### 1. Backend-Container neu erstellen
+### 1. WAR-Mount aktivieren
 
-Nach der ersten Aktivierung des Backend-Mounts:
+Nach dem Eintragen des WAR-Mounts den Backend-Container neu erstellen:
 
 ```powershell
 cd i2b2\i2b2-nl-dev
 docker compose up -d --force-recreate i2b2-core-server
 ```
 
-### 2. Ant installieren
+### 2. Ant und Java pruefen
 
-Nur beim ersten Mal oder falls `ant` fehlt:
+Ant und Java sind im Core-Server-Container bereits enthalten:
 
 ```powershell
-docker exec -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
+docker exec -it i2b2-core-server bash -lc "ant -version && java -version"
 ```
 
-### 3. Backend bauen und deployen
+### 3. Backend bauen
+
+Der Build muss zuerst das gemeinsame `i2b2Common-core.jar` erzeugen und danach
+das vollstaendige WAR zusammenstellen. `ant clean war` reicht nicht aus, weil
+dabei das gemeinsame JAR vor dem CRC-Build fehlt.
 
 ```powershell
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant -Djboss.home=/opt/jboss/wildfly all"
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant clean all war"
+```
 
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.pm && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+Das WAR wird lokal erzeugt unter:
 
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.ontology && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
-
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.crc && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
-
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.workplace && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
-
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.im && ant -Djboss.home=/opt/jboss/wildfly all && ant -Djboss.home=/opt/jboss/wildfly deploy"
+```text
+i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war
 ```
 
 Danach WildFly neu starten:
@@ -121,7 +133,9 @@ Danach WildFly neu starten:
 docker compose restart i2b2-core-server
 ```
 
-Bei jeder Backend-Aenderung muessen die betroffenen Module erneut gebaut und deployed werden. Der komplette Build kann wiederholt werden, wenn unklar ist, welche Abhaengigkeiten betroffen sind.
+Bei jeder Backend-Aenderung muss das WAR erneut gebaut und der Core-Server
+neu gestartet werden. Der komplette Build kann wiederholt werden, wenn unklar
+ist, welche Abhaengigkeiten betroffen sind.
 
 ## Datenbank
 

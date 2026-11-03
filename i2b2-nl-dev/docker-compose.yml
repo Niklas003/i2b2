@@ -65,6 +65,7 @@ services:
 
     volumes:
       - ../i2b2-core-server-1.8.2:/opt/jboss/wildfly/i2b2-core-server
+      - ../i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war:/opt/jboss/wildfly/standalone/deployments/i2b2.war
     networks:
       - i2b2-net
     depends_on:
