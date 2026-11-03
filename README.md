@@ -103,13 +103,20 @@ cd i2b2\i2b2-nl-dev
 docker compose up -d --force-recreate i2b2-core-server
 ```
 
-### 2. Ant und Java pruefen
+### 2. Java und Ant pruefen
 
-Ant und Java sind im Core-Server-Container bereits enthalten:
+Java ist im Core-Server-Container enthalten. Das aktuell verwendete Image
+enthaelt Ant jedoch nicht standardmaessig. Ant muss daher nach dem Erstellen
+des Containers einmal installiert werden:
 
 ```powershell
+docker exec -u 0 -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
 docker exec -it i2b2-core-server bash -lc "ant -version && java -version"
 ```
+
+Die Installation gilt nur fuer den aktuellen Container. Nach
+`--force-recreate` muss sie wiederholt werden; fuer eine dauerhafte Loesung
+sollte ein eigenes Core-Server-Image mit Ant gebaut werden.
 
 ### 3. Backend bauen
 

@@ -840,6 +840,11 @@ public class QueryService {
 	// Creates delegate based on the request type
 	// --------------------------------------------
 	private OMElement handleRequest(String requestType, OMElement request) {
+		long startTime = System.currentTimeMillis();
+
+    	log.info("CRC says hello request started: type=" + requestType
+            + ", thread=" + Thread.currentThread().getName());
+
 		RequestHandlerDelegate requestHandlerDelegate = null;
 
 		if (requestType.equals(PDO_REQUEST)) {
