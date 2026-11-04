@@ -115,7 +115,8 @@ public class QueryService {
 	public OMElement request(OMElement omElement) {
 		Assert.notNull(omElement,
 				"Setfinder request OMElement must not be null");
-		//log.debug("Inside setfinder request " + omElement);
+		log.info("CRC request received: operation=request, thread="
+				+ Thread.currentThread().getName());
 		return handleRequest(SETFINDER_REQUEST, omElement);
 	}
 
@@ -129,7 +130,8 @@ public class QueryService {
 	public OMElement breakdownrequest(OMElement omElement) {
 		Assert.notNull(omElement,
 				"Setfinder request OMElement must not be null");
-		//log.debug("Inside setfinder request " + omElement);
+		log.info("CRC request received: operation=breakdownrequest, thread="
+				+ Thread.currentThread().getName());
 		return handleRequest(QTBREAKDOWN_REQUEST, omElement);
 	}
 	/**
@@ -141,7 +143,8 @@ public class QueryService {
 	 */
 	public OMElement pdorequest(OMElement omElement) {
 		Assert.notNull(omElement, "PDO request OMElement must not be null");
-		//log.debug("Inside pdo request " + omElement);
+		log.info("CRC request received: operation=pdorequest, thread="
+				+ Thread.currentThread().getName());
 		return handleRequest(PDO_REQUEST, omElement);
 	}
 
@@ -185,7 +188,8 @@ public class QueryService {
 	 */
 	public OMElement getNameInfo(OMElement omElement) {
 		Assert.notNull(omElement, "getNameInfo  OMElement must not be null");
-		//log.debug("Inside getNameInfo request " + omElement);
+		log.info("CRC request received: operation=getNameInfo, thread="
+				+ Thread.currentThread().getName());
 		return handleRequest(GETNAMEINFO_REQUEST, omElement);
 	}
 
@@ -842,8 +846,8 @@ public class QueryService {
 	private OMElement handleRequest(String requestType, OMElement request) {
 		long startTime = System.currentTimeMillis();
 
-    	log.info("CRC says hello request started: type=" + requestType
-            + ", thread=" + Thread.currentThread().getName());
+		log.info("CRC request handling started: type=" + requestType
+				+ ", thread=" + Thread.currentThread().getName());
 
 		RequestHandlerDelegate requestHandlerDelegate = null;
 
@@ -858,6 +862,9 @@ public class QueryService {
 			//	} else if (requestType.equals(REDCAP_REQUEST)) {
 			//			requestHandlerDelegate = new RedCapRequestDelegate();			
 		}
+		log.info("CRC request delegate selected: type=" + requestType
+				+ ", delegate=" + (requestHandlerDelegate == null ? "none"
+						: requestHandlerDelegate.getClass().getName()));
 		OMElement returnElement = null;
 		try {
 			// call delegate's handleRequest function
@@ -865,12 +872,19 @@ public class QueryService {
 			String response = requestHandlerDelegate.handleRequest(xmlString); //request.toString());
 			log.debug("Response in service" + response);
 			returnElement = buildOMElementFromString(response);
+			log.info("CRC request completed: type=" + requestType
+					+ ", responseCreated=" + (returnElement != null)
+					+ ", durationMs=" + (System.currentTimeMillis() - startTime));
 		} catch (XMLStreamException e) {
 			log.error("xml stream exception", e);
 		} catch (I2B2Exception e) {
 			log.error("i2b2 exception", e);
 		} catch (Throwable e) {
 			log.error("Throwable", e);
+		}
+		if (returnElement == null) {
+			log.info("CRC request finished without response: type=" + requestType
+					+ ", durationMs=" + (System.currentTimeMillis() - startTime));
 		}
 		return returnElement;
 	}

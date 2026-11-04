@@ -184,8 +184,13 @@ docker inspect i2b2-webclient
 Ant-Build und Deployment erneut ausfuehren und anschliessend den Core-Server neu starten:
 
 ```powershell
+docker exec -u 0 -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
+docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant clean all war"
 docker compose restart i2b2-core-server
 ```
+
+Danach pruefen, ob der Request den Service erreicht und ob die neue WAR im
+Container geladen wurde. Ein Sourcecode-Mount allein reicht dafuer nicht aus.
 
 ### Container startet nicht
 
