@@ -125,19 +125,15 @@ das vollstaendige WAR zusammenstellen. `ant clean war` reicht nicht aus, weil
 dabei das gemeinsame JAR vor dem CRC-Build fehlt.
 
 ```powershell
+docker exec -u 0 -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
 docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant clean all war"
+docker compose restart i2b2-core-server
 ```
 
 Das WAR wird lokal erzeugt unter:
 
 ```text
 i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war
-```
-
-Danach WildFly neu starten:
-
-```powershell
-docker compose restart i2b2-core-server
 ```
 
 Bei jeder Backend-Aenderung muss das WAR erneut gebaut und der Core-Server
@@ -165,45 +161,4 @@ Die Datei `i2b2-nl-dev/.env` steuert Image-Tags, Datenbankverbindung und Passwoe
 ```powershell
 cd i2b2\i2b2-nl-dev
 docker compose up -d --force-recreate
-```
-
-Die Datei `.env` enthaelt Zugangsdaten und sollte nicht in ein oeffentliches Repository committed werden.
-
-## Haeufige Probleme
-
-### Frontend zeigt alte Dateien
-
-Browser-Cache leeren oder `Strg + F5` verwenden. Danach pruefen, ob der Mount aktiv ist:
-
-```powershell
-docker inspect i2b2-webclient
-```
-
-### Backend-Aenderung ist nicht sichtbar
-
-Ant-Build und Deployment erneut ausfuehren und anschliessend den Core-Server neu starten:
-
-```powershell
-docker exec -u 0 -it i2b2-core-server bash -lc "apt-get update && apt-get install -y ant"
-docker exec -it i2b2-core-server bash -lc "cd /opt/jboss/wildfly/i2b2-core-server/edu.harvard.i2b2.server-common && ant clean all war"
-docker compose restart i2b2-core-server
-```
-
-Danach pruefen, ob der Request den Service erreicht und ob die neue WAR im
-Container geladen wurde. Ein Sourcecode-Mount allein reicht dafuer nicht aus.
-
-### Container startet nicht
-
-Logs beider beteiligten Container pruefen:
-
-```powershell
-docker compose logs --tail=200 i2b2-core-server
-docker compose logs --tail=200 i2b2-data-pgsql
-```
-
-### Compose-Datei pruefen
-
-```powershell
-cd i2b2\i2b2-nl-dev
-docker compose config
 ```
