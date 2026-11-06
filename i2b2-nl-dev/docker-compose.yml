@@ -18,7 +18,10 @@ services:
     image: i2b2/i2b2-core-server:${I2B2_CORE_SERVER_TAG}
     container_name: i2b2-core-server
     restart: unless-stopped
+    ports:
+      - "9990:9990"
     environment:
+      - JAVA_OPTS=-Djboss.bind.address.management=0.0.0.0
       - DS_TYPE=${I2B2_DS_TYPE}
      
       - DS_CRC_IP=${I2B2_DS_CRC_IP}
@@ -65,7 +68,7 @@ services:
 
     volumes:
       - ../i2b2-core-server-1.8.2:/opt/jboss/wildfly/i2b2-core-server
-      - ../i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war:/opt/jboss/wildfly/standalone/deployments/i2b2.war
+      - ../i2b2-core-server-1.8.2/edu.harvard.i2b2.server-common/dist/i2b2.war:/opt/jboss/wildfly/customization/i2b2.war
       - ./custom_datasource.txt:/opt/jboss/wildfly/customization/custom_datasource.txt:ro
     networks:
       - i2b2-net
