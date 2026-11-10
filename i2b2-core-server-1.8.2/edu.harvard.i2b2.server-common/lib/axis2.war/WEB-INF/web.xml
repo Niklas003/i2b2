@@ -42,12 +42,6 @@
         <!--</init-param>-->
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <display-name>Apache-Axis AxisAdmin Servlet (Web Admin)</display-name>
-        <servlet-name>AxisAdminServlet</servlet-name>
-        <servlet-class>org.apache.axis2.webapp.AxisAdminServlet</servlet-class>
-    </servlet>
-    
     <!-- servlet>
         <display-name>SOAPMonitorService</display-name>
         <servlet-name>SOAPMonitorService</servlet-name>
@@ -76,11 +70,6 @@
     <servlet-mapping>
         <servlet-name>AxisServlet</servlet-name>
         <url-pattern>/services/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>AxisAdminServlet</servlet-name>
-        <url-pattern>/axis2-admin/*</url-pattern>
     </servlet-mapping>
 
     <!-- servlet-mapping>
