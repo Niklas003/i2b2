@@ -11,7 +11,7 @@
     }, {
       "domain": "i2b2demo",
       "name": "Shibboleth (localhost)",
-      "urlCellPM": "http://127.0.0.1/i2b2/services/PMService/",
+      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
       "allowAnalysis": true,
       "debug": false,
       "saml" : {
@@ -23,7 +23,7 @@
     }, {
       "domain": "i2b2demo",
       "name": "Test multiple SAML2 logins",
-      "urlCellPM": "http://127.0.0.1/i2b2/services/PMService/",
+      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
       "allowAnalysis": true,
       "debug": false,
       "saml" : {

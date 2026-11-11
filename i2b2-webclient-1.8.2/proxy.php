@@ -46,6 +46,7 @@ $WHITELIST = array(
     "http://services.i2b2.org",
     "http://127.0.0.1:9090",
     "http://127.0.0.1:8080",
+	"http://i2b2-core-server:8080",
     "http://127.0.0.1",
     "http://localhost:8080",
     "http://localhost:9090",
