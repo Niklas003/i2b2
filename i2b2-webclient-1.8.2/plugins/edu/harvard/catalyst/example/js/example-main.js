@@ -80,6 +80,29 @@ function testAuthTunnelFunc() {
     });
 }
 
+function startAnalysis() {
+    console.log("Starting TEST_ANALYSIS...");
+
+    let analysisDefinition =
+        '<nsad:analysis_definition xmlns:nsad="http://www.i2b2.org/xsd/cell/crc/psm/analysisdefinition/1.1/">' +
+        '<nsad:analysis_plugin_name>TEST_ANALYSIS</nsad:analysis_plugin_name>' +
+        '<nsad:version>1.0</nsad:version>' +
+        '<nsad:crc_analysis_input_param name="dummy">' +
+        '<nsad:param column="message" type="string">Hello from the Webclient</nsad:param>' +
+        '</nsad:crc_analysis_input_param>' +
+        '<nsad:crc_analysis_result_list>' +
+        '<nsad:result_output name="dummy_result" priority_index="1" display_type="text"/>' +
+        '</nsad:crc_analysis_result_list>' +
+        '</nsad:analysis_definition>';
+
+    i2b2.ajax.CRC.runTestAnalysis({
+        analysis_definition: analysisDefinition
+    }).then(function(response) {
+        console.log("TEST_ANALYSIS response:", response);
+    }).catch(function(error) {
+        console.error("TEST_ANALYSIS failed:", error);
+    });
+}
 
 
 

@@ -112,7 +112,6 @@ i2b2.CRC.ajax._addFunctionCall(	"getQueryMasterList_fromUserId",
                                 ['master_type_cd_xml'],
                                 i2b2.CRC.cfg.parsers.getQueryMasterList_fromUserId);
 
-
 // ================================================================================================== //
 i2b2.CRC.cfg.msgs.getNameInfo = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'+
 '<ns6:request xmlns:ns4="http://www.i2b2.org/xsd/cell/crc/psm/1.1/" xmlns:ns7="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/" xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/pdo/1.1/" xmlns:ns5="http://www.i2b2.org/xsd/hive/plugin/" xmlns:ns2="http://www.i2b2.org/xsd/hive/pdo/1.1/" xmlns:ns6="http://www.i2b2.org/xsd/hive/msg/1.1/">\n'+
@@ -1584,4 +1583,48 @@ i2b2.CRC.cfg.msgs.runExport_fromQueryInstanceId = '<?xml version="1.0" encoding=
     '	</message_body>\n'+
     '</ns6:request>';
 i2b2.CRC.ajax._addFunctionCall("runExport_fromQueryInstanceId","{{{URL}}}request", i2b2.CRC.cfg.msgs.runExport_fromQueryInstanceId);
+
+//THIS IS CALLING A CUSTOM BACKEND ANALYSIS PLUGIN
+// ================================================================================================== //
+i2b2.CRC.cfg.msgs.runTestAnalysis = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+'<ns6:request xmlns:ns4="http://www.i2b2.org/xsd/cell/crc/psm/1.1/" ' +
+'xmlns:ns6="http://www.i2b2.org/xsd/hive/msg/1.1/" ' +
+'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n' +
+'    <message_header>\n' +
+'        {{{proxy_info}}}\n' +
+'        <sending_application><application_name>ExamplePlugin</application_name>' +
+'<application_version>' + i2b2.ClientVersion + '</application_version></sending_application>\n' +
+'        <sending_facility><facility_name>PHS</facility_name></sending_facility>\n' +
+'        <receiving_application><application_name>i2b2_DataRepositoryCell</application_name>' +
+'<application_version>' + i2b2.ClientVersion + '</application_version></receiving_application>\n' +
+'        <receiving_facility><facility_name>PHS</facility_name></receiving_facility>\n' +
+'        <security><domain>{{{sec_domain}}}</domain><username>{{{sec_user}}}</username>' +
+'{{{sec_pass_node}}}</security>\n' +
+'        <message_type><message_code>Q04</message_code><event_type>EQQ</event_type></message_type>\n' +
+'        <message_control_id><message_num>{{{header_msg_id}}}</message_num>' +
+'<instance_num>0</instance_num></message_control_id>\n' +
+'        <processing_id><processing_id>P</processing_id><processing_mode>I</processing_mode></processing_id>\n' +
+'        <accept_acknowledgement_type>messageId</accept_acknowledgement_type>\n' +
+'        <project_id>{{{sec_project}}}</project_id>\n' +
+'    </message_header>\n' +
+'    <request_header><result_waittime_ms>0</result_waittime_ms></request_header>\n' +
+'    <message_body>\n' +
+'        <ns4:psmheader>\n' +
+'            <user group="{{{sec_project}}}" login="{{{sec_user}}}">{{{sec_user}}}</user>\n' +
+'            <patient_set_limit>0</patient_set_limit>\n' +
+'            <estimated_time>0</estimated_time>\n' +
+'            <request_type>CRC_QRY_runQueryInstance_fromAnalysisDefinition</request_type>\n' +
+'        </ns4:psmheader>\n' +
+'        <ns4:request xsi:type="ns4:analysis_definition_requestType">\n' +
+'            {{{analysis_definition}}}\n' +
+'        </ns4:request>\n' +
+'    </message_body>\n' +
+'</ns6:request>';
+
+i2b2.CRC.ajax._addFunctionCall(
+    "runTestAnalysis",
+    "{{{URL}}}request",
+    i2b2.CRC.cfg.msgs.runTestAnalysis,
+    ["analysis_definition"]
+);
 
