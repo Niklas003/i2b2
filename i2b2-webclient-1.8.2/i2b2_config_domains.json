@@ -4,35 +4,10 @@
   "lstDomains": [
     { "domain": "i2b2demo",
       "name": "i2b2.org Demo",
-      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
+      "urlCellPM": "http://services.i2b2.org/i2b2/services/PMService/",
       "allowAnalysis": true,
       "ignorePasswordMgrs": true,
       "debug": false
-    }, {
-      "domain": "i2b2demo",
-      "name": "Shibboleth (localhost)",
-      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
-      "allowAnalysis": true,
-      "debug": false,
-      "saml" : {
-        "shibboleth": {
-          "redirect": "saml-redirect.php",
-          "logout": "saml-logout.php"
-        }
-      }
-    }, {
-      "domain": "i2b2demo",
-      "name": "Test multiple SAML2 logins",
-      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
-      "allowAnalysis": true,
-      "debug": false,
-      "saml" : {
-        "shibboleth":  {
-          "redirect": "saml-redirect.php",
-          "logout": "saml-logout.php"
-        },
-        "okta": null
-      }
     }
   ],
   "loginTimeout": 5
