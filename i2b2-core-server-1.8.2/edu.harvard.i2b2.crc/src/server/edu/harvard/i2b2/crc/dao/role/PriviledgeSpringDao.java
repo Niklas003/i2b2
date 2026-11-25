@@ -57,7 +57,7 @@ public class PriviledgeSpringDao extends CRCDAO implements IPriviledgeDao {
 			throws I2B2DAOException {
 		String lookupSql = "select * from "
 				+ getDbSchemaName()
-				+ "qt_privilege where plugin_id = ? and protection_label_cd is NULL";
+				+ "qt_privilege where plugin_id = ?";
 		List<QtPriviledge> priviledgeRow = jdbcTemplate.query(lookupSql,
 				new Object[] { pluginId }, priviledgeMapper);
 		return priviledgeRow;

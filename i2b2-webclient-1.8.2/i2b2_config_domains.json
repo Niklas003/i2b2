@@ -4,7 +4,7 @@
   "lstDomains": [
     { "domain": "i2b2demo",
       "name": "i2b2.org Demo",
-      "urlCellPM": "http://services.i2b2.org/i2b2/services/PMService/",
+      "urlCellPM": "http://i2b2-core-server:8080/i2b2/services/PMService/",
       "allowAnalysis": true,
       "ignorePasswordMgrs": true,
       "debug": false
