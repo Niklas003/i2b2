@@ -1,0 +1,8 @@
+ARG I2B2_CORE_SERVER_TAG
+FROM i2b2/i2b2-core-server:${I2B2_CORE_SERVER_TAG}
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3 python3-venv \
+    && python3 -m venv /opt/i2b2-plugin/venv \
+    && /opt/i2b2-plugin/venv/bin/python -m pip install --no-cache-dir "psycopg[binary]>=3,<4" \
+    && rm -rf /var/lib/apt/lists/*

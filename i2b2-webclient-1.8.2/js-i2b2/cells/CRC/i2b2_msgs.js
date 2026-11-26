@@ -1607,7 +1607,7 @@ i2b2.CRC.cfg.msgs.runTestAnalysis = '<?xml version="1.0" encoding="UTF-8" standa
 '        <accept_acknowledgement_type>messageId</accept_acknowledgement_type>\n' +
 '        <project_id>{{{sec_project}}}</project_id>\n' +
 '    </message_header>\n' +
-'    <request_header><result_waittime_ms>0</result_waittime_ms></request_header>\n' +
+'    <request_header><result_waittime_ms>10000</result_waittime_ms></request_header>\n' +
 '    <message_body>\n' +
 '        <ns4:psmheader>\n' +
 '            <user group="{{{sec_project}}}" login="{{{sec_user}}}">{{{sec_user}}}</user>\n' +

@@ -103,17 +103,16 @@ function startAnalysis() {
         console.error("TEST_ANALYSIS failed:", error);
     });
 }
-
 function startPythonSecondAnalisys() {
         let analysisDefinition =
         '<analysis_definition>' +
         '<analysis_plugin_name>PYTHON_DOUBLE</analysis_plugin_name>' +
         '<version>1.0</version>' +
-        '<crc_analysis_input_param name="dummy">' +
-        '<param column="message" type="string">Hello from the Webclient</param>' +
+        '<crc_analysis_input_param>' +
+        '<param column="value" type="int">21</param>' +
         '</crc_analysis_input_param>' +
         '<crc_analysis_result_list>' +
-        '<result_output name="dummy_result" priority_index="1" display_type="text"/>' +
+        '<result_output name="XML" full_name="XML" priority_index="1"/>' +
         '</crc_analysis_result_list>' +
         '</analysis_definition>';
 
@@ -125,7 +124,6 @@ function startPythonSecondAnalisys() {
         console.error("PYTHON_DOUBLE failed:", error);
     });
 }
-
 
 
 // ---------------------------------------------------------------------------------------
