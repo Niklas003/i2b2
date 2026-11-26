@@ -32,12 +32,14 @@ def make_result_xml(value: int) -> str:
 
 
 def main() -> None:
+    print("Starte Analyseauftrag....Hello World")
     parser = argparse.ArgumentParser()
     parser.add_argument("-project_id", required=True)
     parser.add_argument("-domain_id", required=True)
     parser.add_argument("-user_id", required=True)
     parser.add_argument("-instance_id", required=True, type=int)
     args = parser.parse_args()
+    print("Got following arguments:", args)
 
     # Dieses Beispiel ist für genau eine Domäne und ein Projekt konfiguriert.
     if (args.domain_id, args.project_id) != (
