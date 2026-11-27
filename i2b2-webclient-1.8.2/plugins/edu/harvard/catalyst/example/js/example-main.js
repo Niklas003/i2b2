@@ -108,6 +108,34 @@ function startPythonAnalisys() {
     });
 }
 
+function startJavaAnalisys() {
+        let analysisDefinition =
+        '<analysis_definition>' +
+        '<analysis_plugin_name>JAVA_TEST</analysis_plugin_name>' +
+        '<version>1.0</version>' +
+        '<crc_analysis_input_param>' +
+        '<param column="value" type="int">21</param>' +
+        '</crc_analysis_input_param>' +
+        '<crc_analysis_result_list>' +
+        '<result_output name="XML" full_name="XML" priority_index="1"/>' +
+        '</crc_analysis_result_list>' +
+        '</analysis_definition>';
+
+    i2b2.ajax.CRC.runTestAnalysis({     //this starts the analyis script with the arguments from above. As this writes the result into the DB we have to get the result XML down below
+        analysis_definition: analysisDefinition
+    }).then(async function(response) {
+        await i2b2.ajax.CRC.getQueryResultInstanceList_fromQueryResultInstanceId({  //after successfully executuung the analysis script we can now get our result XML we therefore have to pass the queryResult Instance ID .... currently it is just mocked but we can get the ID from the response before
+        qr_key_value: "12"
+        }).then(function(resultInstanceList) {
+            console.log("JAVA_TEST result instance list:", resultInstanceList);
+        }).catch(function(error) {
+            console.error("JAVA_TEST failed to get result instance list:", error);
+        });
+    }).catch(function(error) {
+        console.error("JAVA_TEST failed:", error);
+    });
+}
+
 
 // ---------------------------------------------------------------------------------------
 window.addEventListener("I2B2_READY", ()=> {
