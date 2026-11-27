@@ -80,30 +80,7 @@ function testAuthTunnelFunc() {
     });
 }
 
-function startAnalysis() {
-    console.log("Starting TEST_ANALYSIS...");
-
-    let analysisDefinition =
-        '<analysis_definition>' +
-        '<analysis_plugin_name>TEST_ANALYSIS</analysis_plugin_name>' +
-        '<version>1.0</version>' +
-        '<crc_analysis_input_param name="dummy">' +
-        '<param column="message" type="string">Hello from the Webclient</param>' +
-        '</crc_analysis_input_param>' +
-        '<crc_analysis_result_list>' +
-        '<result_output name="dummy_result" priority_index="1" display_type="text"/>' +
-        '</crc_analysis_result_list>' +
-        '</analysis_definition>';
-
-    i2b2.ajax.CRC.runTestAnalysis({
-        analysis_definition: analysisDefinition
-    }).then(function(response) {
-        console.log("TEST_ANALYSIS response:", response);
-    }).catch(function(error) {
-        console.error("TEST_ANALYSIS failed:", error);
-    });
-}
-function startPythonSecondAnalisys() {
+function startPythonAnalisys() {
         let analysisDefinition =
         '<analysis_definition>' +
         '<analysis_plugin_name>PYTHON_DOUBLE</analysis_plugin_name>' +
@@ -116,10 +93,16 @@ function startPythonSecondAnalisys() {
         '</crc_analysis_result_list>' +
         '</analysis_definition>';
 
-    i2b2.ajax.CRC.runTestAnalysis({
+    i2b2.ajax.CRC.runTestAnalysis({     //this starts the analyis script with the arguments from above. As this writes the result into the DB we have to get the result XML down below
         analysis_definition: analysisDefinition
-    }).then(function(response) {
-        console.log("PYTHON_DOUBLE response:", response);
+    }).then(async function(response) {
+        await i2b2.ajax.CRC.getQueryResultInstanceList_fromQueryResultInstanceId({  //after successfully executuung the analysis script we can now get our result XML we therefore have to pass the queryResult Instance ID .... currently it is just mocked but we can get the ID from the response before
+        qr_key_value: "12"
+        }).then(function(resultInstanceList) {
+            console.log("PYTHON_DOUBLE result instance list:", resultInstanceList);
+        }).catch(function(error) {
+            console.error("PYTHON_DOUBLE failed to get result instance list:", error);
+        });
     }).catch(function(error) {
         console.error("PYTHON_DOUBLE failed:", error);
     });
